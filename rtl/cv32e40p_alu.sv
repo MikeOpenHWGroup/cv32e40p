@@ -339,7 +339,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
   begin
     cmp_signed = 4'b0;
 
-    unique case (operator_i)
+    unique0 case (operator_i)
       ALU_GTS,
       ALU_GES,
       ALU_LTS,
@@ -422,7 +422,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
   begin
     cmp_result = is_equal;
     f_is_nan   = {4{(f_is_qnan | f_is_snan)}};
-    unique case (operator_i)
+    unique0 case (operator_i)
       ALU_EQ:            cmp_result = is_equal;
       ALU_NE:            cmp_result = ~is_equal;
       ALU_GTS, ALU_GTU:  cmp_result = is_greater;
@@ -539,7 +539,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
            f_sign_inject_result[30:0] = operand_a_i[30:0];
            f_sign_inject_result[31]   = operand_a_i[31];
 
-           unique case(operator_i)
+           unique0 case(operator_i)
              ALU_FKEEP:  f_sign_inject_result[31] = operand_a_i[31];
              ALU_FSGNJ:  f_sign_inject_result[31] = operand_b_i[31];
              ALU_FSGNJN: f_sign_inject_result[31] = !operand_b_i[31];
@@ -604,7 +604,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
     shuffle_reg0_sel = 2'b10;
     shuffle_through  = '1;
 
-    unique case(operator_i)
+    unique0 case(operator_i)
       ALU_EXT, ALU_EXTS: begin
         if (operator_i == ALU_EXTS)
           shuffle_reg1_sel = 2'b11;
@@ -641,7 +641,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
       end
 
       ALU_SHUF2: begin
-        unique case (vector_mode_i)
+        unique0 case (vector_mode_i)
           VEC_MODE8: begin
             shuffle_reg_sel[3] = ~operand_b_i[26];
             shuffle_reg_sel[2] = ~operand_b_i[18];
@@ -660,10 +660,10 @@ module cv32e40p_alu import cv32e40p_pkg::*;
       end
 
       ALU_INS: begin
-        unique case (vector_mode_i)
+        unique0 case (vector_mode_i)
           VEC_MODE8: begin
             shuffle_reg0_sel = 2'b00;
-            unique case (imm_vec_ext_i)
+            unique0 case (imm_vec_ext_i)
               2'b00: begin
                 shuffle_reg_sel[3:0] = 4'b1110;
               end
@@ -699,10 +699,10 @@ module cv32e40p_alu import cv32e40p_pkg::*;
     shuffle_byte_sel = '0;
 
     // byte selector
-    unique case (operator_i)
+    unique0 case (operator_i)
       ALU_EXTS,
       ALU_EXT: begin
-        unique case (vector_mode_i)
+        unique0 case (vector_mode_i)
           VEC_MODE8: begin
             shuffle_byte_sel[3] = imm_vec_ext_i[1:0];
             shuffle_byte_sel[2] = imm_vec_ext_i[1:0];
@@ -722,7 +722,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
       end
 
       ALU_PCKLO: begin
-        unique case (vector_mode_i)
+        unique0 case (vector_mode_i)
           VEC_MODE8: begin
             shuffle_byte_sel[3] = 2'b00;
             shuffle_byte_sel[2] = 2'b00;
@@ -742,7 +742,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
       end
 
       ALU_PCKHI: begin
-        unique case (vector_mode_i)
+        unique0 case (vector_mode_i)
           VEC_MODE8: begin
             shuffle_byte_sel[3] = 2'b00;
             shuffle_byte_sel[2] = 2'b00;
@@ -763,7 +763,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
 
       ALU_SHUF2,
       ALU_SHUF: begin
-        unique case (vector_mode_i)
+        unique0 case (vector_mode_i)
           VEC_MODE8: begin
             shuffle_byte_sel[3] = operand_b_i[25:24];
             shuffle_byte_sel[2] = operand_b_i[17:16];
@@ -989,7 +989,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
   begin
     reverse_result = '0;
 
-    unique case (radix_mux_sel)
+    unique0 case (radix_mux_sel)
       2'b00: reverse_result = radix_2_rev;
       2'b01: reverse_result = radix_4_rev;
       2'b10: reverse_result = radix_8_rev;
@@ -1072,7 +1072,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
   begin
     result_o   = '0;
 
-    unique case (operator_i)
+    unique0 case (operator_i)
       // Standard Operations
       ALU_AND:  result_o = operand_a_i & operand_b_i;
       ALU_OR:   result_o = operand_a_i | operand_b_i;
@@ -1143,7 +1143,7 @@ module cv32e40p_alu import cv32e40p_pkg::*;
       ALU_FSGNJ, ALU_FSGNJN,
       ALU_FSGNJX, ALU_FKEEP: result_o = f_sign_inject_result;
 
-      default: ; // default case to suppress unique warning
+      default: ; // default case to suppress unique0 warning
     endcase
   end
 

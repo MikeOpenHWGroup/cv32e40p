@@ -746,11 +746,11 @@ if(PULP_SECURE==1) begin
     endcase
 
     // exception controller gets priority over other writes
-    unique case (1'b1)
+    unique0 case (1'b1)
 
       csr_save_cause_i: begin
 
-        unique case (1'b1)
+        unique0 case (1'b1)
           csr_save_if_i:
             exception_pc = pc_if_i;
           csr_save_id_i:
@@ -760,7 +760,7 @@ if(PULP_SECURE==1) begin
           default:;
         endcase
 
-        unique case (priv_lvl_q)
+        unique0 case (priv_lvl_q)
 
           PRIV_LVL_U: begin
             if(~is_irq) begin
@@ -837,7 +837,7 @@ if(PULP_SECURE==1) begin
       end //csr_restore_uret_i
 
       csr_restore_mret_i: begin //MRET
-        unique case (mstatus_q.mpp)
+        unique0 case (mstatus_q.mpp)
           PRIV_LVL_U: begin
             mstatus_n.uie  = mstatus_q.mpie;
             priv_lvl_n     = PRIV_LVL_U;
@@ -984,10 +984,10 @@ end else begin //PULP_SECURE == 0
     endcase
 
     // exception controller gets priority over other writes
-    unique case (1'b1)
+    unique0 case (1'b1)
 
       csr_save_cause_i: begin
-        unique case (1'b1)
+        unique0 case (1'b1)
           csr_save_if_i:
             exception_pc = pc_if_i;
           csr_save_id_i:
@@ -1037,7 +1037,7 @@ end //PULP_SECURE
     csr_wdata_int = csr_wdata_i;
     csr_we_int    = 1'b1;
 
-    unique case (csr_op_i)
+    unique0 case (csr_op_i)
       CSR_OP_WRITE: csr_wdata_int = csr_wdata_i;
       CSR_OP_SET:   csr_wdata_int = csr_wdata_i | csr_rdata_o;
       CSR_OP_CLEAR: csr_wdata_int = (~csr_wdata_i) & csr_rdata_o;

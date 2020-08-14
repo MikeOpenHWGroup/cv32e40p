@@ -284,7 +284,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
 
     hwloop_mask_o           = 1'b0;
 
-    unique case (ctrl_fsm_cs)
+    unique0 case (ctrl_fsm_cs)
       // We were just reset, wait for fetch_enable
       RESET:
       begin
@@ -424,7 +424,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
 
             is_decoding_o = 1'b1;
 
-            unique case(1'b1)
+            unique0 case(1'b1)
 
               //irq_req_ctrl_i comes from a FF in the interrupt controller
               //irq_enable_int: check again irq_enable_int because xIE could have changed
@@ -462,7 +462,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
                 end else begin
 
                   //decoding block
-                  unique case (1'b1)
+                  unique0 case (1'b1)
 
                     jump_in_dec: begin
                     // handle unconditional jumps
@@ -525,7 +525,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
                     end
                     default:;
 
-                  endcase // unique case (1'b1)
+                  endcase // unique0 case (1'b1)
                 end // else: !if(illegal_insn_i)
 
                 if (debug_single_step_i & ~debug_mode_q) begin
@@ -542,7 +542,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
                     // TODO: handle ebrk_force_debug_mode plus single stepping over ebreak
                     if (id_ready_i) begin
                     // make sure the current instruction has been executed
-                        unique case(1'b1)
+                        unique0 case(1'b1)
                         illegal_insn_i | ecall_insn_i:
                             ctrl_fsm_ns = FLUSH_EX; // TODO: flush ex
                         (~ebrk_force_debug_mode & ebrk_insn_i):
@@ -554,7 +554,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
                         default:
                             // regular instruction
                             ctrl_fsm_ns = DBG_FLUSH;
-                        endcase // unique case (1'b1)
+                        endcase // unique0 case (1'b1)
                     end
                 end // if (debug_single_step_i & ~debug_mode_q)
 
@@ -598,7 +598,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
             csr_save_cause_o  = !debug_mode_q;
             csr_cause_o       = {1'b0, EXC_CAUSE_ILLEGAL_INSN};
           end else begin
-            unique case (1'b1)
+            unique0 case (1'b1)
               ebrk_insn_i: begin
                 csr_save_id_o     = 1'b1;
                 csr_save_cause_o  = 1'b1;
@@ -610,7 +610,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
                 csr_cause_o       = {1'b0, current_priv_lvl_i == PRIV_LVL_U ? EXC_CAUSE_ECALL_UMODE : EXC_CAUSE_ECALL_MMODE};
               end
               default:;
-            endcase // unique case (1'b1)
+            endcase // unique0 case (1'b1)
           end
 
         end
@@ -778,7 +778,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
               if (debug_single_step_i && ~debug_mode_q)
                   ctrl_fsm_ns = DBG_TAKEN_IF;
           end else begin
-            unique case(1'b1)
+            unique0 case(1'b1)
               ebrk_insn_i: begin
                   //ebreak
                   pc_mux_o              = PC_EXCEPTION;
@@ -838,7 +838,7 @@ module cv32e40p_controller import cv32e40p_pkg::*;
       begin
         is_decoding_o = 1'b0;
         ctrl_fsm_ns   = DECODE;
-        unique case(1'b1)
+        unique0 case(1'b1)
           mret_dec_i: begin
               //mret
               pc_mux_o              = debug_mode_q ? PC_EXCEPTION : PC_MRET;
