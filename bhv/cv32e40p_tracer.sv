@@ -22,6 +22,8 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+`ifndef VERILATOR
+
 module cv32e40p_tracer import cv32e40p_pkg::*;
 (
   // Clock and Reset
@@ -1101,3 +1103,5 @@ module cv32e40p_tracer import cv32e40p_pkg::*;
   end // always @ (posedge clk)
 
 endmodule
+
+`endif // VERILATOR
